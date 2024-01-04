@@ -34,3 +34,32 @@ def new_user():
 
     existing_users = Users.query.order_by(Users.date_added)
     return render_template("new_user.html", form = form, name=name, existing_users=existing_users)
+
+
+@auth_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = Users.query.filter_by(username=form.username.data).first()
+        if user:
+            # Check the hash
+            if check_password_hash(user.password_hash, form.password.data):
+                login_user(user)
+                flash("Login Succesfull!!")
+                return redirect(url_for('dash_bp.index'))
+            else:
+                flash("Wrong password.")
+        else:
+            flash("That User Doesn't Exist! Try Again...")
+    
+    return render_template('login.html', form=form)
+    
+    
+@auth_bp.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash("Logged out.")
+    return redirect(url_for('dash_bp.index'))
+
+    
