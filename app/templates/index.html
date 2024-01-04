@@ -4,6 +4,53 @@
 {% block content %}
 
 
-<a href="{{ url_for('auth_bp.new_user') }}">Link to new user</a>
+<!-- <a href="{{ url_for('auth_bp.new_user') }}">Link to new user</a> -->
+
+{% if current_user.is_authenticated %}
+
+<h2>Welcome, {{current_user.name}}.</h2>
+
+<form method="POST">
+    {{ task_form.hidden_tag() }}
+
+    {{ task_form.title.label(class="form-label") }}
+    {{ task_form.title(class="form-control") }}
+    <br/>
+    {{ task_form.content.label(class="form-label") }}
+    {{ task_form.content(class="form-control") }}
+    <br/>
+    {{ task_form.submit(class="btn btn-secondary") }}
+
+</form>
+<br>
+	
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Notes</th>
+        <th scope="col"></th>
+        <th scope="col">Poster</th>
+      </tr>
+    </thead>
+    {%for u in tasks%}
+    <tbody>
+      <tr>
+        <td scope="row">{{u.id}}. {{u.title}}</td>
+        <td colspan="2" style="max-width: 500px;">{{u.content}}</td>
+        <td>{{u.poster_id}} {%if u.poster_id == current_user.id%} Delete {%endif%}</td>
+      </tr>
+    </tbody>
+    {%endfor%}
+</table>
+
+
+
+
+{%else%}
+please <a href="{{ url_for('auth_bp.login') }}">Login</a>
+
+
+{%endif%}
 
 {% endblock %}

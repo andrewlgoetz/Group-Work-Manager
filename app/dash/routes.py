@@ -20,4 +20,4 @@ def index():
     tasks = paul.get_homepage_tasks()
 
 
-    return render_template("index.html", tasks, task_form)
+    return render_template("index.html", tasks=tasks, task_form=task_form)

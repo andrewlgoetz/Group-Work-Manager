@@ -18,4 +18,5 @@ class Taskdata():
         form.content.data = ''
         db.session.add(task)
         db.session.commit()
+        flash("Task Posted")
         return redirect(url_for("dash_bp.index"))
