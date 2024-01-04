@@ -37,6 +37,12 @@ def create_app():
         # db.metadata.clear()
         # db.drop_all()
         db.create_all()
+
+
+
+
+    #errors:
+    app.register_error_handler(403, forbidden)
     
     return app
 
@@ -44,3 +50,6 @@ def create_app():
 #     app.run(debug=True, port=5000)
 
 
+
+def forbidden(e):
+    return render_template('403.html'), 403

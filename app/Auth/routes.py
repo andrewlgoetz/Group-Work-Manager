@@ -62,4 +62,26 @@ def logout():
     flash("Logged out.")
     return redirect(url_for('dash_bp.index'))
 
-    
+
+
+@auth_bp.route('/delete_user/<int:id>', methods={'GET', 'POST'})
+def delete_user(id):
+    if (current_user.id == id or current_user.username == "admin"): #admin profile
+        user = Users.query.get_or_404(id)
+        print(id)
+        print(user.username)
+        try:
+            db.session.delete(user)
+            db.session.commit()
+            
+            flash("User Deleted")
+            existing_users = Users.query.order_by(Users.date_added)
+            form = UserForm()
+            name = None
+            #TODO redirect to new_user, instead of rendering template from this route
+            return render_template("new_user.html", form = form, name=name, existing_users=existing_users)
+        except:
+            flash("Error, user could not be deleted")
+            return redirect(url_for('auth_bp.new_user'))
+    else:
+        abort(403)
