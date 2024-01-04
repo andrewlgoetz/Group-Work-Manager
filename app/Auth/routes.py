@@ -12,4 +12,5 @@ auth_bp = Blueprint("auth_bp", __name__, template_folder='templates', static_fol
 
 @auth_bp.route("/new_user")
 def new_user():
-    return render_template("new_user.html")
+    user = Users.query.filter_by(username="bob").first()
+    return render_template("new_user.html", id = user.id)

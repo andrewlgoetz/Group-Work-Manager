@@ -17,3 +17,8 @@ import sqlite3
 from wtforms.widgets import TextArea
 from flask_ckeditor import CKEditorField
 from flask_wtf.file import FileField
+
+
+## Models
+from app.extension import db as db
+from app.models.users import Users as Users

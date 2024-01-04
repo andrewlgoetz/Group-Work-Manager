@@ -2,7 +2,7 @@ from flask import Flask
 from imports import *
 import os
 from config import Config
-from app.models import db
+from app.extension import db
 
 def create_app():
     app = Flask(__name__)
@@ -22,7 +22,8 @@ def create_app():
     
     #Models
     db.init_app(app)
-
+    with app.app_context():
+        db.create_all()
     
     return app
 
