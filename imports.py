@@ -22,6 +22,7 @@ from flask_wtf.file import FileField
 #forms
 from app.forms import UserForm as UserForm
 from app.forms import LoginForm as LoginForm
+from app.forms import GroupTaskForm as GroupTaskForm
 
 ## Models
 from app.extension import db as db
@@ -29,3 +30,7 @@ from app.models.models import Users as Users
 from app.models.models import GroupTasks as GroupTasks
 from app.models.models import GroupTasksComments as GroupTasksComments
 from app.models.models import GroupTasksCommentsThreaded as GroupTasksCommentsThreaded
+
+
+# Data Interface
+from app.DataInterface.group import Taskdata as Taskdata

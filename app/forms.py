@@ -1,6 +1,6 @@
 from imports import *
 
-
+# Users
 class UserForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     username = StringField("Username", validators=[DataRequired()]) #TODO add email validator
@@ -12,4 +12,10 @@ class UserForm(FlaskForm):
 class LoginForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+# Group Tasks
+class GroupTaskForm(FlaskForm):
+    title = StringField("Title", validators=[DataRequired()])
+    content = CKEditorField('Content', validators=[DataRequired()])
     submit = SubmitField("Submit")

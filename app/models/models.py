@@ -32,7 +32,7 @@ class Users(db.Model, UserMixin):
 	    return '<Name %r>' % self.name
 
 
-class GroupTasks(db.Model):
+class GroupTasks(db.Model): # TODO reference other users, and each user can see their tasks
     id = db.Column(db.Integer, primary_key=True)
     poster_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     title = db.Column(db.String(55))
