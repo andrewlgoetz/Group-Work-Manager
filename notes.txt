@@ -1,0 +1,9 @@
+Tables, in BCNF:
+
+Users(id, key, username, name, date_added, password_hash)
+
+GroupTasks(id, poster, title, content, date_posted, status, tally)
+
+GroupTaskComments(id, task_id, poster_id, content, date_posted, tally)
+
+GroupTaskCommentsThreaded(id, parent_id, poster_id, content, date_posted, tally)

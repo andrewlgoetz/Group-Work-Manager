@@ -21,4 +21,7 @@ from flask_wtf.file import FileField
 
 ## Models
 from app.extension import db as db
-from app.models.users import Users as Users
+from app.models.models import Users as Users
+from app.models.models import GroupTasks as GroupTasks
+from app.models.models import GroupTasksComments as GroupTasksComments
+from app.models.models import GroupTasksCommentsThreaded as GroupTasksCommentsThreaded

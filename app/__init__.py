@@ -10,7 +10,7 @@ def create_app():
 
 
 
-   
+ 
 
     #Auth & New User
     from .auth.routes import auth_bp
@@ -23,6 +23,7 @@ def create_app():
     #Models
     db.init_app(app)
     with app.app_context():
+        # db.metadata.clear()
         # db.drop_all()
         db.create_all()
     
