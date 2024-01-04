@@ -19,6 +19,10 @@ from flask_ckeditor import CKEditorField
 from flask_wtf.file import FileField
 
 
+#forms
+from app.forms import UserForm as UserForm
+from app.forms import LoginForm as LoginForm
+
 ## Models
 from app.extension import db as db
 from app.models.models import Users as Users
