@@ -1,7 +1,7 @@
 from flask import Blueprint
 from imports import *
 
-# auth_bp = Blueprint('auth', __name__)
+auth_bp = Blueprint("auth_bp", __name__, template_folder='templates', static_folder = 'static')
 
 # # Login 
 # login_manager = LoginManager()

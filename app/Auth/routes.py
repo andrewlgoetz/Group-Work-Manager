@@ -10,7 +10,6 @@ auth_bp = Blueprint("auth_bp", __name__, template_folder='templates', static_fol
 #delete user
 
 
-
 @auth_bp.route("/new_user")
 def new_user():
     return render_template("new_user.html")

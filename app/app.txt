@@ -5,7 +5,9 @@
 
 # app = Flask(__name__)
 # # app.register_blueprint(example_blueprint)
-
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
+    # app.config['SECRET_KEY'] = "abcd"
+    # app.config['SESSION_TYPE'] = 'memcached'
 # #Models
 
 # #Auth & New User
