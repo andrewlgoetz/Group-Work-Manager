@@ -8,9 +8,18 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'login'
 
+    @login_manager.user_loader
+    def load_user(user_id):
+        return Users.query.get(int(user_id))
 
- 
+    @login_manager.user_loader
+    def get_user(ident):
+        return Users.query.get(int(ident))
+
 
     #Auth & New User
     from .auth.routes import auth_bp
