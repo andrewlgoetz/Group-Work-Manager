@@ -21,3 +21,17 @@ def index():
 
 
     return render_template("index.html", tasks=tasks, task_form=task_form)
+
+#open up a task
+@dash_bp.route("/group_task/<int:id>", methods=['GET', 'POST'])
+@login_required
+def group_task(id):
+    comments = paul.get_task_comments(id)
+    task = paul.get_task(id)
+    comment_form = GroupTaskCommentForm()
+
+    if comment_form.validate_on_submit():
+        return paul.post_task_comment_and_redirect(comment_form, id)
+
+
+    return render_template("group_note.html", id=id, comments = comments, task = task)

@@ -48,7 +48,8 @@
 
 
 {%else%}
-please <a href="{{ url_for('auth_bp.login') }}">Login</a>
+please <a href="{{ url_for('auth_bp.login') }}"> Login </a> <br>
+or <a href="{{ url_for('auth_bp.new_user') }}">Register</a>
 
 
 {%endif%}

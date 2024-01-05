@@ -19,3 +19,12 @@ class GroupTaskForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     content = CKEditorField('Content', validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+#Comments
+class GroupTaskCommentForm(FlaskForm):
+    content = CKEditorField('Content', validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+class GroupTaskThreadedCommentForm(FlaskForm):
+    content = CKEditorField('Content', validators=[DataRequired()])
+    submit = SubmitField("Submit")

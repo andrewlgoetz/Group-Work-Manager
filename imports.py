@@ -23,6 +23,8 @@ from flask_wtf.file import FileField
 from app.forms import UserForm as UserForm
 from app.forms import LoginForm as LoginForm
 from app.forms import GroupTaskForm as GroupTaskForm
+from app.forms import GroupTaskCommentForm as GroupTaskCommentForm
+from app.forms import GroupTaskThreadedCommentForm as GroupTaskThreadedCommentForm
 
 ## Models
 from app.extension import db as db
