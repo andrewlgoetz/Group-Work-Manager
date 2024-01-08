@@ -36,6 +36,13 @@ class Taskdata():
         db.session.add(comment)
         db.session.commit()
         return redirect(url_for("dash_bp.comment", id = parent_id))
+    
+    def post_threaded_comment_and_redirect_to_threaded(self, form, parent_id):
+        comment = GroupTasksCommentsThreaded(parent_id=parent_id, poster_id=current_user.id, content=form.content.data)
+        form.content.data = ''
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(url_for("dash_bp.threaded_comment", id = parent_id))
 
     def get_threaded_comments(self, parent_id):
         parent_comment = GroupTasksComments.query.get_or_404(parent_id)
@@ -49,6 +56,9 @@ class Taskdata():
 
     def get_comment(self, id):
         return GroupTasksComments.query.get_or_404(id)
+    
+    def get_parent_comment(self, id):
+        return GroupTasksCommentsThreaded.query.get_or_404(id)
 
     def get_task_comments(self, id):
         task = GroupTasks.query.get_or_404(id)
@@ -63,4 +73,5 @@ class Taskdata():
 
     def get_task(self, id):
         return GroupTasks.query.get_or_404(id)
+
 
