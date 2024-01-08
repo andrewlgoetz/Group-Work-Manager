@@ -2,10 +2,11 @@
 
 {% block content %}
 
-<h2>{{ task.title }}</h2>
+
+
 <p>{{ name }}</p>
 
-<p style="max-width: 800px; word-wrap: break-word; width: 800px;">{{ task.content }}</p>
+<p style="max-width: 800px; word-wrap: break-word; width: 800px;">{{ parent_comment.content }}</p>
 <form method="POST">
     <br/>
     {{ comment_form.content.label(class="form-label") }}
@@ -37,5 +38,5 @@
 </tbody>
 {%endfor%}
 
-{%endblock%}
 
+{%endblock%}

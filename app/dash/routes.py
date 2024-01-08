@@ -27,15 +27,29 @@ def index():
 @login_required
 def group_task(id):
     comment_form = GroupTaskCommentForm()
-    print("x")
     if comment_form.validate_on_submit():
         print(comment_form.content.data)
         return paul.post_task_comment_and_redirect(comment_form, id)
     comments = paul.get_task_comments(id)
     task = paul.get_task(id)
     name = paul.get_poster_name(task.poster_id)
-    # print(comment_form.errors)
-# issue: form not validating
-    comment_form.content.data = ''
+    # print(comment_form.errors) # if form not validating
+
+    comment_form.content.data = '' # not entirely neccessary, paul handles this
     # print(comments)
     return render_template("group_task.html", id=id, comments = comments, task = task, name=name, comment_form=comment_form)
+
+
+# open a comment
+@dash_bp.route("/comment/<int:id>", methods=['GET', 'POST'])
+@login_required
+def comment(id):
+    comment_form = GroupTaskThreadedCommentForm()
+    if comment_form.validate_on_submit():
+        return paul.post_threaded_comment_and_redirect(comment_form, id)
+    comments = paul.get_threaded_comments(id)
+    parent_comment = paul.get_comment(id)
+    name = paul.get_poster_name(parent_comment.poster_id)
+
+    comment_form.content.data = ''
+    return render_template("comment.html", id=id, comments=comments, parent_comment=parent_comment, comment_form=comment_form, name=name)
