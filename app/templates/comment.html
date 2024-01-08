@@ -30,9 +30,9 @@
 <br><br>
 
 {%for u in comments%}
-<tbody>
+<tbody style="margin-left: 50px;">
   <tr>
-    <td colspan="2" style="max-width: 500px;"> <a href="{{url_for('dash_bp.threaded_comment', id=u.id)}}">{{u.content}}</a></td>
+    <td colspan="2" style="max-width: 500px;"> <a href="{{url_for('dash_bp.comment', id=u.id)}}">{{u.content}}</a></td>
     <br>
 </tr>
 </tbody>

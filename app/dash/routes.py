@@ -28,7 +28,7 @@ def index():
 def group_task(id):
     comment_form = GroupTaskCommentForm()
     if comment_form.validate_on_submit():
-        print(comment_form.content.data)
+        # print(comment_form.content.data)
         return paul.post_task_comment_and_redirect(comment_form, id)
     comments = paul.get_task_comments(id)
     task = paul.get_task(id)
@@ -36,7 +36,6 @@ def group_task(id):
     # print(comment_form.errors) # if form not validating
 
     comment_form.content.data = '' # not entirely neccessary, paul handles this
-    # print(comments)
     return render_template("group_task.html", id=id, comments = comments, task = task, name=name, comment_form=comment_form)
 
 
@@ -44,9 +43,10 @@ def group_task(id):
 @dash_bp.route("/comment/<int:id>", methods=['GET', 'POST'])
 @login_required
 def comment(id):
-    comment_form = GroupTaskThreadedCommentForm()
+    comment_form = GroupTaskCommentForm()
     if comment_form.validate_on_submit():
-        return paul.post_threaded_comment_and_redirect(comment_form, id)
+        task_id = paul.get_comment(id).task_id
+        return paul.post_threaded_comment_and_redirect(comment_form, id,task_id)
     comments = paul.get_threaded_comments(id)
     parent_comment = paul.get_comment(id)
     name = paul.get_poster_name(parent_comment.poster_id)
@@ -54,16 +54,3 @@ def comment(id):
     comment_form.content.data = ''
     return render_template("comment.html", id=id, comments=comments, parent_comment=parent_comment, comment_form=comment_form, name=name)
 
-# open a threaded  comment
-@dash_bp.route("/threaded_comment/<int:id>", methods=['GET', 'POST'])
-@login_required
-def threaded_comment(id):
-    comment_form = GroupTaskThreadedCommentForm()
-    if comment_form.validate_on_submit():
-        return paul.post_threaded_comment_and_redirect_to_threaded(comment_form, id)
-    comments = paul.get_threaded_comments(id) # 
-    parent_comment = paul.get_parent_comment(id)
-    name = paul.get_poster_name(parent_comment.poster_id)
-
-    comment_form.content.data = ''
-    return render_template("threaded_comment.html", id=id, comments=comments, parent_comment=parent_comment, comment_form=comment_form, name=name)

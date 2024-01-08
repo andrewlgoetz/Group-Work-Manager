@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h2>{{ task.title }}</h2>
+<h2> Task title: {{ task.title }}</h2>
 <p>{{ name }}</p>
 
 <p style="max-width: 800px; word-wrap: break-word; width: 800px;">{{ task.content }}</p>
@@ -29,7 +29,7 @@
 <br><br>
 
 {%for u in comments%}
-<tbody>
+<tbody style="margin-left: 50px;">
   <tr>
     <td colspan="2" style="max-width: 500px;"> <a href="{{url_for('dash_bp.comment', id=u.id)}}">{{u.content}}</a></td>
     <br>

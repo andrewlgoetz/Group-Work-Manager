@@ -35,6 +35,7 @@ def create_app():
     db.init_app(app)
     with app.app_context():
         # db.metadata.clear()
+        # print("x")
         # db.drop_all()
         db.create_all()
 

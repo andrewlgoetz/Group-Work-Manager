@@ -23,47 +23,54 @@ class Taskdata():
 
     def post_task_comment_and_redirect(self, form, task_id):
         comment = GroupTasksComments(task_id = task_id, poster_id=current_user.id, content = form.content.data)
-        # print(form.content.data)
-        # print("x")
+        print(str(comment.parent_id) + "...")
         form.content.data = ''
         db.session.add(comment)
         db.session.commit()
         return redirect(url_for("dash_bp.group_task", id=task_id))
 
-    def post_threaded_comment_and_redirect(self, form, parent_id):
-        comment = GroupTasksCommentsThreaded(parent_id=parent_id, poster_id=current_user.id, content=form.content.data)
+## similar to task comment, expcet parent comment isnt null
+    def post_threaded_comment_and_redirect(self, form, parent_id, task_id):
+        comment = GroupTasksComments(task_id = task_id, parent_id=parent_id, poster_id=current_user.id, content=form.content.data)
         form.content.data = ''
         db.session.add(comment)
         db.session.commit()
         return redirect(url_for("dash_bp.comment", id = parent_id))
     
-    def post_threaded_comment_and_redirect_to_threaded(self, form, parent_id):
-        comment = GroupTasksCommentsThreaded(parent_id=parent_id, poster_id=current_user.id, content=form.content.data)
-        form.content.data = ''
-        db.session.add(comment)
-        db.session.commit()
-        return redirect(url_for("dash_bp.threaded_comment", id = parent_id))
+    # def post_threaded_comment_and_redirect_to_threaded(self, form, parent_id):
+    #     comment = GroupTasksCommentsThreaded(parent_id=parent_id, poster_id=current_user.id, content=form.content.data)
+    #     form.content.data = ''
+    #     db.session.add(comment)
+    #     db.session.commit()
+    #     return redirect(url_for("dash_bp.threaded_comment", id = parent_id))
 
-    def get_threaded_comments(self, parent_id):
-        parent_comment = GroupTasksComments.query.get_or_404(parent_id)
-        child_comments = []
-        get_comments = GroupTasksCommentsThreaded.query.filter_by(parent_id = parent_id)
-        for i in get_comments:
-            child_comments.append(i)
-        return child_comments      
+    # def get_threaded_comments(self, parent_id):
+    #     parent_comment = GroupTasksComments.query.get_or_404(parent_id)
+    #     child_comments = []
+    #     get_comments = GroupTasksCommentsThreaded.query.filter_by(parent_id = parent_id)
+    #     for i in get_comments:
+    #         child_comments.append(i)
+    #     return child_comments      
 
     ## TODO def search for root task of a comment
 
     def get_comment(self, id):
         return GroupTasksComments.query.get_or_404(id)
     
-    def get_parent_comment(self, id):
-        return GroupTasksCommentsThreaded.query.get_or_404(id)
-
     def get_task_comments(self, id):
         task = GroupTasks.query.get_or_404(id)
         comments = []
-        get_comments = GroupTasksComments.query.filter_by(task_id = id)
+        ## Issue: displaying all comments of the task. search by task_id + no parent
+        get_comments = GroupTasksComments.query.filter_by(parent_id=0, task_id = id)
+
+        for i in get_comments:
+            comments.append(i)
+        return comments
+
+    def get_threaded_comments(self, id):
+        # task = GroupTasks.query.get_or_404(id)
+        comments = []
+        get_comments = GroupTasksComments.query.filter_by(parent_id = id)
         for i in get_comments:
             comments.append(i)
         return comments

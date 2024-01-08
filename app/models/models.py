@@ -46,25 +46,20 @@ class GroupTasks(db.Model): # TODO reference other users, and each user can see 
 class GroupTasksComments(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     task_id = db.Column(db.Integer, db.ForeignKey('group_tasks.id'))
+    parent_id = db.Column(db.Integer, db.ForeignKey('group_tasks_comments.id'), nullable=True, default = 0) # null by default
     poster_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     content = db.Column(db.String(1000), nullable=False)
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    last_updated = db.Column(db.DateTime, default=datetime.utcnow)
     tally = db.Column(db.Integer, default = 0)
 
-class GroupTasksCommentsThreaded(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    parent_id = db.Column(db.Integer, db.ForeignKey('group_tasks_comments.id'))
-    poster_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    content = db.Column(db.String(1000), nullable=False)
-    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
-    tally = db.Column(db.Integer, default = 0)
-
-
-
-# class Users(db.Model, UserMixin):
+# class GroupTasksCommentsThreaded(db.Model):
 #     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     username = db.Column(db.String(20), nullable=False)
-    
-#     def __repr__(self):
-# 	    return '<Name %r>' % self.name
+#     parent_id = db.Column(db.Integer, db.ForeignKey('group_tasks_comments.id'))
+#     poster_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+#     content = db.Column(db.String(1000), nullable=False)
+#     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+#     tally = db.Column(db.Integer, default = 0)
+
+
 
