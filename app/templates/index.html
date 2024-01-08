@@ -36,7 +36,7 @@
     {%for u in tasks%}
     <tbody>
       <tr>
-        <td scope="row">{{u.id}}. {{u.title}}</td>
+        <td scope="row">{{u.id}}. <a href="{{url_for('dash_bp.group_task', id = u.id)}}"> {{u.title}} </a> </td>
         <td colspan="2" style="max-width: 500px;">{{u.content}}</td>
         <td>{{u.poster_id}} {%if u.poster_id == current_user.id%} Delete {%endif%}</td>
       </tr>

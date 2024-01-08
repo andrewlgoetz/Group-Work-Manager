@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>{{ task.title }}</h2>
+<p>{{ name }}</p>
+
+<p style="max-width: 800px; word-wrap: break-word; width: 800px;">{{ task.content }}</p>
+<form method="POST">
+    <br/>
+    {{ comment_form.content.label(class="form-label") }}
+    {{ comment_form.content(class="form-control") }}
+    <br/>
+    {{ comment_form.submit(class="btn btn-secondary") }}
+
+    {{ comment_form.csrf_token }}
+    {{ comment_form.hidden_tag() }}
+    
+    {% if comment_form.errors %}
+        <ul class="errors">
+            {% for error in comment_form.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</form>
+
+<br><br>
+
+{%for u in comments%}
+<tbody>
+  <tr>
+    <td colspan="2" style="max-width: 500px;">{{u.content}}</td>
+  </tr>
+</tbody>
+{%endfor%}
+
+{%endblock%}
+

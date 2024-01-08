@@ -20,9 +20,11 @@ class Taskdata():
         db.session.commit()
         flash("Task Posted")
         return redirect(url_for("dash_bp.index"))
-    
+
     def post_task_comment_and_redirect(self, form, task_id):
         comment = GroupTasksComments(task_id = task_id, poster_id=current_user.id, content = form.content.data)
+        print(form.content.data)
+        print("x")
         form.content.data = ''
         db.session.add(comment)
         db.session.commit()
