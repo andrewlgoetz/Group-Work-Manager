@@ -3,10 +3,12 @@
 {% block content %}
 
 
+<h3> Task: {{task.title}}</h3>
+{{task.content}} <br><br>
 
-<p>{{ name }}</p>
-
+<p>Comment by: {{ name }}</p>
 <p style="max-width: 800px; word-wrap: break-word; width: 800px;">{{ parent_comment.content }}</p>
+Post a reply:
 <form method="POST">
     <br/>
     {{ comment_form.content.label(class="form-label") }}
@@ -26,6 +28,7 @@
         </ul>
     {% endif %}
 </form>
+
 
 <br><br>
 

@@ -32,27 +32,14 @@ class Taskdata():
 ## similar to task comment, expcet parent comment isnt null
     def post_threaded_comment_and_redirect(self, form, parent_id, task_id):
         comment = GroupTasksComments(task_id = task_id, parent_id=parent_id, poster_id=current_user.id, content=form.content.data)
+        
         form.content.data = ''
         db.session.add(comment)
         db.session.commit()
+        task = self.get_root_task(parent_id)
         return redirect(url_for("dash_bp.comment", id = parent_id))
     
-    # def post_threaded_comment_and_redirect_to_threaded(self, form, parent_id):
-    #     comment = GroupTasksCommentsThreaded(parent_id=parent_id, poster_id=current_user.id, content=form.content.data)
-    #     form.content.data = ''
-    #     db.session.add(comment)
-    #     db.session.commit()
-    #     return redirect(url_for("dash_bp.threaded_comment", id = parent_id))
 
-    # def get_threaded_comments(self, parent_id):
-    #     parent_comment = GroupTasksComments.query.get_or_404(parent_id)
-    #     child_comments = []
-    #     get_comments = GroupTasksCommentsThreaded.query.filter_by(parent_id = parent_id)
-    #     for i in get_comments:
-    #         child_comments.append(i)
-    #     return child_comments      
-
-    ## TODO def search for root task of a comment
 
     def get_comment(self, id):
         return GroupTasksComments.query.get_or_404(id)
@@ -80,6 +67,12 @@ class Taskdata():
 
     def get_task(self, id):
         return GroupTasks.query.get_or_404(id)
+
+    def get_root_task(self, comment_id):
+        comment = self.get_comment(comment_id)
+        task_id = comment.task_id
+        task = GroupTasks.query.filter_by(id=task_id).first()
+        return task
 
 
 ### Searches

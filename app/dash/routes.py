@@ -50,7 +50,7 @@ def comment(id):
     comments = paul.get_threaded_comments(id)
     parent_comment = paul.get_comment(id)
     name = paul.get_poster_name(parent_comment.poster_id)
-
+    task = paul.get_root_task(id)
     comment_form.content.data = ''
-    return render_template("comment.html", id=id, comments=comments, parent_comment=parent_comment, comment_form=comment_form, name=name)
+    return render_template("comment.html", id=id, comments=comments, parent_comment=parent_comment, comment_form=comment_form, name=name, task=task)
 
