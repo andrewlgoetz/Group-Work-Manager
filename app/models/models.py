@@ -1,13 +1,6 @@
 from imports import *
 # from app.extension import db
 
-# Users(id, key, username, name, date_added, password_hash)
-
-# GroupTasks(id, poster_id, title, content, due_date, date_posted, status, tally)
-
-# GroupTaskComments(id, task_id, poster_id, content, date_posted, tally)
-
-# GroupTaskCommentsThreaded(id, parent_id, poster_id, content, date_posted, tally)
 
 class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
