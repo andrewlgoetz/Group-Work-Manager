@@ -10,7 +10,7 @@
 {% if tasks %}
 
 	{% for task in tasks %}
-    <h2><a href="{{ url_for('dash_bp.task', id=task.id)}}">{{ task.title }}</a></h2>
+    <h2><a href="{{ url_for('dash_bp.group_task', id=task.id)}}">{{ task.title }}</a></h2>
     
 
     <tbody style="margin-left: 50px;">

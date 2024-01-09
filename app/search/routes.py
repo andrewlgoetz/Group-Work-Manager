@@ -14,10 +14,10 @@ paul = Taskdata()
 @login_required
 def search():
     form = SearchForm()
-    
+    tasks = GroupTasks.query
     if form.validate_on_submit():
         searched = form.searched.data
-        GroupTasks.query.filter(searched.like("%" + searched + "%")).all()
+        tasks= tasks.filter((GroupTasks.content.like("%" + searched + "%"))).all()
         return render_template("search.html", form=form, searched=searched, tasks=tasks)
 
 
