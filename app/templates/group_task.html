@@ -2,40 +2,47 @@
 
 {% block content %}
 
-<h2> Task title: {{ task.title }}</h2>
-<p>{{ name }}</p>
+<div class="container mt-4">
+    <h2>{{ task.title }}</h2>
+    <p>{{ name }}</p>
 
-<p style="max-width: 800px; word-wrap: break-word; width: 800px;">{{ task.content }}</p>
-<form method="POST">
-    <br/>
-    {{ comment_form.content.label(class="form-label") }}
-    {{ comment_form.content(class="form-control") }}
-    <br/>
-    {{ comment_form.submit(class="btn btn-secondary") }}
+    <div class="card mb-4">
+        <div class="card-body">
+            <p class="card-text" style="max-width: 800px; word-wrap: break-word;">{{ task.content }}</p>
+        </div>
+    </div>
 
-    {{ comment_form.csrf_token }}
-    {{ comment_form.hidden_tag() }}
+    <form method="POST" class="mb-4">
+        <div class="form-group">
+            {{ comment_form.content.label(class="form-label") }}
+            {{ comment_form.content(class="form-control") }}
 
-     <!-- If there is an error in the form validation -->
-    {% if comment_form.errors %}
-        <ul class="errors">
-            {% for error in comment_form.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</form>
+            <!-- If there is an error in the form validation -->
+            {% if comment_form.errors %}
+                <ul class="errors">
+                    {% for error in comment_form.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
 
-<br><br>
+        {{ comment_form.submit(class="btn btn-secondary") }}
+        {{ comment_form.csrf_token }}
+        {{ comment_form.hidden_tag() }}
+    </form>
 
-{%for u in comments%}
-<tbody style="margin-left: 50px;">
-  <tr>
-    <td colspan="2" style="max-width: 500px;"> <a href="{{url_for('dash_bp.comment', id=u.id)}}">{{u.content}}</a></td>
-    <br>
-</tr>
-</tbody>
-{%endfor%}
+    <div class="comments">
+        {% for comment in comments %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">{{ get_name(comment.poster_id) }}</h5> <small><a href="{{url_for('dash_bp.comment', id=comment.id)}}">reply</a></small>
+                    <p class="card-text">{{ comment.content }}</p>
+                    <p class="card-text"><small class="text-muted">{{ comment.date_posted.strftime('%Y-%m-%d %H:%M:%S') }}</small></p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
-{%endblock%}
-
+{% endblock %}

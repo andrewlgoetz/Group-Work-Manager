@@ -41,6 +41,7 @@ class GroupTasksComments(db.Model):
     task_id = db.Column(db.Integer, db.ForeignKey('group_tasks.id'))
     parent_id = db.Column(db.Integer, db.ForeignKey('group_tasks_comments.id'), nullable=True, default = 0) # null by default
     poster_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # name = db.Column(db.Integer, db.ForeignKey('users.id')) 
     content = db.Column(db.String(1000), nullable=False)
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     last_updated = db.Column(db.DateTime, default=datetime.utcnow)

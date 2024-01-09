@@ -36,7 +36,7 @@ def group_task(id):
     # print(comment_form.errors) # if form not validating
 
     comment_form.content.data = '' # not entirely neccessary, paul handles this
-    return render_template("group_task.html", id=id, comments = comments, task = task, name=name, comment_form=comment_form)
+    return render_template("group_task.html", id=id, comments = comments, task = task, name=name, comment_form=comment_form, get_name = paul.get_poster_name)
 
 
 # open a comment
