@@ -1,15 +1,2 @@
 Tables, in BCNF:
 
-Users(id, key, username, name, date_added, password_hash)
-
-GroupTasks(id, poster, title, content, date_posted, status, tally)
-
-GroupTaskComments(id, task_id, poster_id, content, date_posted, tally)
-
-GroupTaskCommentsThreaded(id, parent_id, poster_id, content, date_posted, tally)
-
-
-TODO:
-make messages part of the base, so that they flash on the next page the user loads, as opposed to their return to the previous page
-^^ correction, maybe not if you want to use messages for different things, investigate if there are different classses of messages
-other than just get messages
