@@ -33,6 +33,7 @@ class GroupTasks(db.Model): # TODO reference other users, and each user can see 
     due_date = db.Column(db.DateTime, default=datetime.utcnow)
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.Integer, default = 0)
+    # actioned_by = db.Column(db.Integer, db.ForeignKey('users.id')) # user working on this task
     tally = db.Column(db.Integer, default = 0)
 
 

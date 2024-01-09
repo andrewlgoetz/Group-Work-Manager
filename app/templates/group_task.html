@@ -12,6 +12,17 @@
         </div>
     </div>
 
+    <div class="status mb-4">
+        <h4>Status:</h4>
+        {% if task.status == 0 %}
+            <span class="badge badge-warning" style="color:red;">Not Started</span>
+        {% elif task.status == 1 %}
+            <span class="badge badge-info" style="color:yellow;">In Progress</span>
+        {% elif task.status == 2 %}
+            <span class="badge badge-success" style="color:green;">Completed</span>
+        {% endif %}
+    </div>
+
     <form method="POST" class="mb-4">
         <div class="form-group">
             {{ comment_form.content.label(class="form-label") }}
@@ -36,9 +47,10 @@
         {% for comment in comments %}
             <div class="card mb-2">
                 <div class="card-body">
-                    <h5 class="card-title">{{ get_name(comment.poster_id) }}</h5> <small><a href="{{url_for('dash_bp.comment', id=comment.id)}}">reply</a></small>
+                    <h5 class="card-title">{{ get_name(comment.poster_id) }}</h5> 
                     <p class="card-text">{{ comment.content }}</p>
                     <p class="card-text"><small class="text-muted">{{ comment.date_posted.strftime('%Y-%m-%d %H:%M:%S') }}</small></p>
+                    <small><a href="{{url_for('dash_bp.comment', id=comment.id)}}">reply</a></small>
                 </div>
             </div>
         {% endfor %}
