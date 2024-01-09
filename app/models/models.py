@@ -46,4 +46,13 @@ class GroupTasksComments(db.Model):
     last_updated = db.Column(db.DateTime, default=datetime.utcnow)
     tally = db.Column(db.Integer, default = 0)
 
-
+#chart tasks are recurring tasks
+class ChartTasks(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    poster_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    title = db.Column(db.String(55))
+    content = db.Column(db.Text)
+    period = db.Column(db.Integer, default=1)#[1,5]:day, 3 days, week, bi-week, month
+    start_date = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.Integer, default = 0)
+      

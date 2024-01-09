@@ -31,9 +31,14 @@ def create_app():
     from .dash.routes import dash_bp 
     app.register_blueprint(dash_bp)
 
+    #Search
     from .search.routes import search_bp 
     app.register_blueprint(search_bp)
     
+    #Chart
+    from .dash.chart import chart_bp
+    app.register_blueprint(chart_bp)
+
     #Models
     db.init_app(app)
     with app.app_context():
