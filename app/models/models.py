@@ -46,13 +46,4 @@ class GroupTasksComments(db.Model):
     last_updated = db.Column(db.DateTime, default=datetime.utcnow)
     tally = db.Column(db.Integer, default = 0)
 
-# class GroupTasksCommentsThreaded(db.Model):
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     parent_id = db.Column(db.Integer, db.ForeignKey('group_tasks_comments.id'))
-#     poster_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-#     content = db.Column(db.String(1000), nullable=False)
-#     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
-#     tally = db.Column(db.Integer, default = 0)
-
-
 
