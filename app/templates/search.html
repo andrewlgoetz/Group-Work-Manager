@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br>
+<h2>Results for: {{searched}}</h2>
+
+<br>
+
+{% if tasks %}
+
+	{% for task in tasks %}
+    <h2><a href="{{ url_for('dash_bp.task', id=task.id)}}">{{ task.title }}</a></h2>
+    
+
+    <tbody style="margin-left: 50px;">
+        <tr>
+          <td colspan="2" style="max-width: 500px;"> {{task.content}}</td>
+          <br>
+      </tr>
+      </tbody>
+
+      {%endfor%}
+      
+ {%else%}
+ No Results     
+      {%endif%}
+
+
+
+{%endblock%}

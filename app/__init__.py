@@ -30,6 +30,9 @@ def create_app():
     #Dashboard
     from .dash.routes import dash_bp 
     app.register_blueprint(dash_bp)
+
+    from .search.routes import search_bp 
+    app.register_blueprint(search_bp)
     
     #Models
     db.init_app(app)

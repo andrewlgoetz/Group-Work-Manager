@@ -25,3 +25,7 @@ class GroupTaskCommentForm(FlaskForm):
     content = CKEditorField('Content', validators=[DataRequired()])
     submit = SubmitField("Submit")
 
+#Search
+class SearchForm(FlaskForm):
+    searched = StringField("Searched", validators=[DataRequired()])
+    submit = SubmitField("Submit")

@@ -82,3 +82,8 @@ class Taskdata():
         return GroupTasks.query.get_or_404(id)
 
 
+### Searches
+    
+    def search():
+        pass
+        
