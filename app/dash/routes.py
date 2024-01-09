@@ -3,7 +3,7 @@ from imports import *
 
 dash_bp = Blueprint("dash_bp", __name__, template_folder='templates', static_folder = 'static')
 
-# Paul gets data on group tasks & comments
+# Paul handles data for group tasks & their comments, as well as search results
 paul = Taskdata()
 
 
