@@ -16,15 +16,22 @@
         <h4>Status:</h4>
 
         {% if task.status == 0 %}
-            <span class="badge badge-warning" style="color:red;">Not Started</span>
-            <a href="">Start</a>
+            <h4 class="badge badge-warning" style="color:red;">Not Started</h4>
+           
         {% elif task.status == 1 %}
-            <span class="badge badge-info" style="color:yellow;">In Progress</span>
-            <a href="">Complete</a>
+            <h3 class="badge badge-info" style="color:yellow;">In Progress</h3>
+            
         {% elif task.status == 2 %}
-            <span class="badge badge-success" style="color:green;">Completed</span>
-            <a href="">Mark Incomplete</a>
+            <h3 class="badge badge-success" style="color:green;">Completed</h3>
+            
         {% endif %}
+
+        <form method="POST" class="mb-4">
+            <button type="submit" name="start" value="1" class="btn btn-success">Start</button>
+            <button type="submit" name="complete" value="2" class="btn btn-primary">Complete</button>
+            <button type="submit" name="incomplete" value="0" class="btn btn-danger">Mark Incomplete</button>
+            {{ comment_form.csrf_token }}
+        </form>
     </div>
 
     <form method="POST" class="mb-4">

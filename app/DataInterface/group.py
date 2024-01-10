@@ -80,3 +80,11 @@ class Taskdata():
     def search():
         pass
         
+
+
+## updating tasks:
+    def update_task_status(self, id, new_status):
+        task = self.get_task(id)
+        task.status = new_status
+        db.session.commit()
+        
