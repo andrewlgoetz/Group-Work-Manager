@@ -1,50 +1,63 @@
-
-{%extends 'base.html'%}
+{% extends 'base.html' %}
 
 {% block content %}
 
 
-<!-- <a href="{{ url_for('auth_bp.new_user') }}">Link to new user</a> -->
-
 {% if current_user.is_authenticated %}
 
-<h2>Welcome, {{current_user.name}}.</h2>
+<div class="container mt-4">
+    {% if current_user.is_authenticated %}
+        <h2>Welcome, {{ current_user.name }}.</h2> <br><br>
+        <h3>Post a Task</h3>
+        <form method="POST" class="mb-4">
+            {{ task_form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ task_form.title.label(class="form-label") }}
+                {{ task_form.title(class="form-control") }}
+            </div>
 
-<form method="POST">
-    {{ task_form.hidden_tag() }}
+            <div class="form-group">
+                {{ task_form.content.label(class="form-label") }}
+                {{ task_form.content(class="form-control") }}
+            </div>
 
-    {{ task_form.title.label(class="form-label") }}
-    {{ task_form.title(class="form-control") }}
-    <br/>
-    {{ task_form.content.label(class="form-label") }}
-    {{ task_form.content(class="form-control") }}
-    <br/>
-    {{ task_form.submit(class="btn btn-secondary") }}
+            {{ task_form.submit(class="btn btn-secondary") }}
+        </form>
 
-</form>
-<br>
-	
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Title</th>
-        <th scope="col">Notes</th>
-        <th scope="col"></th>
-        <th scope="col">Poster</th>
-      </tr>
-    </thead>
-    {%for u in tasks%}
-    <tbody>
-      <tr>
-        <td scope="row">{{u.id}}. <a href="{{url_for('dash_bp.group_task', id = u.id)}}"> {{u.title}} </a> </td>
-        <td colspan="2" style="max-width: 500px;">{{u.content}}</td>
-        <td>{{u.poster_id}} {%if u.poster_id == current_user.id%} Delete {%endif%}</td>
-      </tr>
-    </tbody>
-    {%endfor%}
-</table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Notes</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Poster</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td scope="row">{{ task.id }}. <a href="{{ url_for('dash_bp.group_task', id=task.id) }}">{{ task.title }}</a></td>
+                        <td style="max-width: 500px;">{{ task.content }}</td>
+                        <td>
+                            {% if task.status == 0 %}
+                                <span class="badge badge-warning" style="color: red;">Not Started</span>
+                            {% elif task.status == 1 %}
+                                <span class="badge badge-info" style="color: yellow;">In Progress</span>
+                            {% elif task.status == 2 %}
+                                <span class="badge badge-success" style="color: green;">Completed</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ task.poster_id }} {% if task.poster_id == current_user.id %} Delete {% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-
+    {% else %}
+        <p>Please <a href="{{ url_for('auth_bp.login') }}">Login</a> or <a href="{{ url_for('auth_bp.new_user') }}">Register</a></p>
+    {% endif %}
+</div>
 
 
 {%else%}
@@ -53,5 +66,6 @@ or <a href="{{ url_for('auth_bp.new_user') }}">Register</a>
 
 
 {%endif%}
+
 
 {% endblock %}
