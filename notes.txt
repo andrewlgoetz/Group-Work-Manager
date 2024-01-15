@@ -1,2 +1,11 @@
 Tables, in BCNF:
 
+nb.42.{{form.hidden_tag()}}
+
+docker:
+
+docker build -t image_a .
+docker run -d -p 5000:5000 image_a
+<-d for detached mode, to run app from at localhost:5000>
+
+search does not work with docker, its an issue with the app.context_processor and accessing the form from the navbar.html file
