@@ -53,11 +53,18 @@ def create_app():
     #errors:
     app.register_error_handler(403, forbidden)
     
+    
+
     return app
 
 # if __name__ == '__main__':
 #     app.run(debug=True, port=5000)
 
+
+# def base(app):
+#     with app.context_processor:
+#         form = SearchForm()
+#         return dict(form=form)
 
 
 def forbidden(e):

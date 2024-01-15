@@ -9,11 +9,10 @@ td = Taskdata()
 
 @app.context_processor
 def base():
-    form = SearchForm()
-    return dict(form=form)
-
-
+    search_form = SearchForm()
+    return dict(search_form=search_form)
 
 
 if __name__ == '__main__':
     app.run( debug=True)
+    
