@@ -2,45 +2,57 @@
 
 {% block content %}
 
+<div class="container mt-3">
+{%if not parent_comment.parent_id == 0%}
+<a href="{{url_for('dash_bp.comment', id=parent_comment.parent_id)}}"> <button type="button" class="btn btn-primary btn-sm">back</button></a>
+{%else%}
+<a href="{{url_for('dash_bp.group_task', id=task.id)}}"> <button type="button" class="btn btn-primary btn-sm">back</button></a>
+{%endif%}
+</div>
 
-<h3> Task: {{task.title}}</h3>
+<div class="container mt-4">
+    <h3>Task: {{ task.title }}</h3>
 
-{{task.content}}
-<br><br>
-<p>Comment by: {{ name }}</p>
-<p style="max-width: 500px; word-wrap: break-word; width: 500px;">{{ parent_comment.content }}</p>
-Post a reply:
-<form method="POST">
-    <br/>
-    {{ comment_form.content.label(class="form-label") }}
-    {{ comment_form.content(class="form-control") }}
-    <br/>
-    {{ comment_form.submit(class="btn btn-secondary") }}
+    <p>{{ task.content }}</p>
+    <br><br>
+    <p>Comment by: {{ name }}</p>
+    <p style="max-width: 500px; word-wrap: break-word; width: 500px;">{{ parent_comment.content }}</p>
 
-    {{ comment_form.csrf_token }}
-    {{ comment_form.hidden_tag() }}
+    <h4>Post a reply:</h4>
+    <form method="POST" autocomplete="off">
+        <div class="form-group">
+            {{ comment_form.content.label(class="form-label") }}
+            {{ comment_form.content(class="form-control") }}
+        </div>
 
-     <!-- If there is an error in the form validation -->
-    {% if comment_form.errors %}
-        <ul class="errors">
-            {% for error in comment_form.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</form>
+        {{ comment_form.submit(class="btn btn-secondary") }}
+        {{ comment_form.csrf_token }}
+        {{ comment_form.hidden_tag() }}
 
+        <!-- If there is an error in the form validation -->
+        {% if comment_form.errors %}
+            <ul class="errors">
+                {% for error in comment_form.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </form>
 
-<br><br>
+    <br><br>
 
-{%for u in comments%}
-<tbody style="margin-left: 50px;">
-  <tr>
-    <td colspan="2" style="max-width: 500px;"> <a href="{{url_for('dash_bp.comment', id=u.id)}}">{{u.content}}</a></td>
-    <br>
-</tr>
-</tbody>
-{%endfor%}
+    <div class="comments">
+        {% for comment in comments %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">{{ get_name(comment.poster_id) }}</h5> 
+                    <p class="card-text">{{ comment.content }}</p>
+                    <p class="card-text"><small class="text-muted">{{ comment.date_posted.strftime('%Y-%m-%d %H:%M:%S') }}</small></p>
+                    <small><a href="{{url_for('dash_bp.comment', id=comment.id)}}">reply</a></small>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
-
-{%endblock%}
+{% endblock %}

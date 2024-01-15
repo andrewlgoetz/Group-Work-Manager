@@ -48,11 +48,11 @@ class Taskdata():
         task = GroupTasks.query.get_or_404(id)
         comments = []
         ## Issue: displaying all comments of the task. search by task_id + no parent
-        get_comments = GroupTasksComments.query.filter_by(parent_id=0, task_id = id)
+        get_comments = GroupTasksComments.query.filter_by(parent_id=0, task_id = id).order_by(GroupTasksComments.date_posted).all()
 
         for i in get_comments:
             comments.append(i)
-        return comments
+        return comments[::-1]
 
     def get_threaded_comments(self, id):
         # task = GroupTasks.query.get_or_404(id)
@@ -87,4 +87,3 @@ class Taskdata():
         task = self.get_task(id)
         task.status = new_status
         db.session.commit()
-        

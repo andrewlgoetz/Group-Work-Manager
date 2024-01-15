@@ -18,7 +18,7 @@ def search():
     if form.validate_on_submit():
         searched = form.searched.data
         tasks= tasks.filter((GroupTasks.content.like("%" + searched + "%"))).all()
-        return render_template("search.html", form=form, searched=searched, tasks=tasks)
+        return render_template("search.html", form=form, searched=searched, tasks=tasks, get_name = paul.get_poster_name)
 
 
 

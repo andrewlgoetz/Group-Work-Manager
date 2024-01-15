@@ -16,13 +16,13 @@
         <h4>Status:</h4>
 
         {% if task.status == 0 %}
-            <h4 class="badge badge-warning" style="color:red;">Not Started</h4>
+            <span class="badge badge-warning" style="font-size: larger; color: red;">Not Started</span>
            
         {% elif task.status == 1 %}
-            <h3 class="badge badge-info" style="color:yellow;">In Progress</h3>
+            <span class="badge badge-info" style="font-size: larger; color: orange;">In Progress</span>
             
         {% elif task.status == 2 %}
-            <h3 class="badge badge-success" style="color:green;">Completed</h3>
+            <span class="badge badge-success" style="font-size: larger; color: green;">Completed</span>
             
         {% endif %}
 

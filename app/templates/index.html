@@ -2,9 +2,6 @@
 
 {% block content %}
 
-
-{% if current_user.is_authenticated %}
-
 <div class="container mt-4">
     {% if current_user.is_authenticated %}
         <h2>Welcome, {{ current_user.name }}.</h2> <br><br>
@@ -25,47 +22,29 @@
             {{ task_form.submit(class="btn btn-secondary") }}
         </form>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Notes</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Poster</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for task in tasks %}
-                    <tr>
-                        <td scope="row">{{ task.id }}. <a href="{{ url_for('dash_bp.group_task', id=task.id) }}">{{ task.title }}</a></td>
-                        <td style="max-width: 500px;">{{ task.content }}</td>
-                        <td>
-                            {% if task.status == 0 %}
-                                <span class="badge badge-warning" style="color: red;">Not Started</span>
-                            {% elif task.status == 1 %}
-                                <span class="badge badge-info" style="color: yellow;">In Progress</span>
-                            {% elif task.status == 2 %}
-                                <span class="badge badge-success" style="color: green;">Completed</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ task.poster_id }} {% if task.poster_id == current_user.id %} Delete {% endif %}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="list-group">
+            {% for task in tasks %}
+                <a href="{{ url_for('dash_bp.group_task', id=task.id)}}" class="list-group-item list-group-item-action">
+                    <h4 class="mb-1">{{ task.title }}</h4>
+                    
+                    {% if task.status == 0 %}
+                    <span class="badge badge-warning" style="color: red;">Not Started</span>
+                {% elif task.status == 1 %}
+                    <span class="badge badge-info" style="color: orange;">In Progress</span>
+                {% elif task.status == 2 %}
+                    <span class="badge badge-success" style="color: green;">Completed</span>
+                {% endif %}
+                    <p class="mb-1" style="max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ task.content }}</p>
+                        &nbsp;| Posted by {{ get_poster_name(task.poster_id) }} on {{ task.date_posted.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                </a>
+            {% endfor %}
+        </div>
 
-    {% else %}
-        <p>Please <a href="{{ url_for('auth_bp.login') }}">Login</a> or <a href="{{ url_for('auth_bp.new_user') }}">Register</a></p>
-    {% endif %}
 </div>
 
-
-{%else%}
-please <a href="{{ url_for('auth_bp.login') }}"> Login </a> <br>
-or <a href="{{ url_for('auth_bp.new_user') }}">Register</a>
-
-
-{%endif%}
-
+{% else %}
+    Please <a href="{{ url_for('auth_bp.login') }}">Login</a> <br>
+    or <a href="{{ url_for('auth_bp.new_user') }}">Register</a>
+{% endif %}
 
 {% endblock %}

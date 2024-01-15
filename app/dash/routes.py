@@ -20,7 +20,7 @@ def index():
     tasks = paul.get_homepage_tasks()
 
 
-    return render_template("index.html", tasks=tasks, task_form=task_form)
+    return render_template("index.html", tasks=tasks, task_form=task_form, get_poster_name=paul.get_poster_name )
 
 #open up a task
 @dash_bp.route("/group_task/<int:id>", methods=['GET', 'POST'])
@@ -32,7 +32,7 @@ def group_task(id):
         return paul.post_task_comment_and_redirect(comment_form, id)
 
 
-    #
+    # TODO: pass all this to pual and let him handle it
     if request.method == 'POST':
         # Check which button was pressed and update task status accordingly
         if 'start' in request.form:
@@ -67,7 +67,7 @@ def comment(id):
     name = paul.get_poster_name(parent_comment.poster_id)
     task = paul.get_root_task(id)
     comment_form.content.data = ''
-    return render_template("comment.html", id=id, comments=comments, parent_comment=parent_comment, comment_form=comment_form, name=name, task=task)
+    return render_template("comment.html", id=id, comments=comments, parent_comment=parent_comment, comment_form=comment_form, name=name, task=task, get_name=paul.get_poster_name)
 
 
 # Update task status

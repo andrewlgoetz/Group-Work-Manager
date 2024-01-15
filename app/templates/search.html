@@ -2,30 +2,35 @@
 
 {% block content %}
 
-<br>
-<h2>Results for: {{searched}}</h2>
+<div class="container mt-4">
+    <h2>Results for: {{ searched }}</h2>
 
-<br>
+    <br>
 
-{% if tasks %}
+    {% if tasks %}
+        <div class="list-group">
+            {% for task in tasks %}
+                <a href="{{ url_for('dash_bp.group_task', id=task.id)}}" class="list-group-item list-group-item-action">
+                    <h4 class="mb-1">{{ task.title }}</h4>
 
-	{% for task in tasks %}
-    <h2><a href="{{ url_for('dash_bp.group_task', id=task.id)}}">{{ task.title }}</a></h2>
-    
+                    {% if task.status == 0 %}
+                        <span class="badge badge-warning" style="font-size: larger; color: red;">Not Started</span>
+                       
+                    {% elif task.status == 1 %}
+                        <span class="badge badge-info" style="font-size: larger; color: orange;">In Progress</span>
+                        
+                    {% elif task.status == 2 %}
+                        <span class="badge badge-success" style="font-size: larger; color: green;">Completed</span>
+                        
+                    {% endif %}
+                    <p class="mb-1" style="max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ task.content }}</p>
+                    <small class="text-muted">Posted by {{ get_name(task.poster_id) }} on {{ task.date_posted.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No Results</p>
+    {% endif %}
+</div>
 
-    <tbody style="margin-left: 50px;">
-        <tr>
-          <td colspan="2" style="max-width: 500px;"> {{task.content}}</td>
-          <br>
-      </tr>
-      </tbody>
-
-      {%endfor%}
-      
- {%else%}
- No Results     
-      {%endif%}
-
-
-
-{%endblock%}
+{% endblock %}
